@@ -1,5 +1,6 @@
 import sys
-from flask import Flask, jsonify, request
+import os
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from nba_api.stats.endpoints import leagueleaders, leaguestandingsv3
 import traceback
@@ -7,7 +8,7 @@ import traceback
 # Force unbuffered output
 sys.stdout = open(sys.stdout.fileno(), 'w', buffering=1)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='dist')
 CORS(app)
 
 @app.route('/api/leaders')
@@ -104,8 +105,18 @@ def get_standings():
 def health():
     return jsonify({'status': 'ok'})
 
+# Serve React build static files
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
 if __name__ == '__main__':
-    print("Starting NBA Stats Proxy (Python + nba_api) on http://localhost:3001", flush=True)
+    port = int(os.environ.get('PORT', 3001))
+    print(f"Starting NBA Stats Proxy on port {port}", flush=True)
     print("Endpoints:", flush=True)
     print("  GET /api/leaders?Season=2026-27&StatCategory=PTS", flush=True)
     print("  GET /api/leaders?Season=2026-27&StatCategory=REB", flush=True)
@@ -114,4 +125,4 @@ if __name__ == '__main__':
     print("  GET /api/leaders?Season=2026-27&StatCategory=BLK", flush=True)
     print("  GET /api/standings?Season=2026-27&SeasonType=Regular%20Season", flush=True)
     print("  GET /api/health", flush=True)
-    app.run(port=3001, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=False)
