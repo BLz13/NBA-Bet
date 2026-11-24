@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+venv
+.env
+.env.local
+
+# Build outputs
+dist
+build
+
+# IDE/Editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*
+
+# Railway/Docker configs (keep Dockerfile)
+railway.toml
+nixpacks.toml
+Procfile
+
+# Test/coverage
+coverage
+.nyc_output
+
+# Misc
+*.md
+!README.md
