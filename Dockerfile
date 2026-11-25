@@ -34,9 +34,7 @@ COPY --from=frontend-builder /app/dist ./dist
 # Copy Python proxy server
 COPY proxy_server.py .
 
-# Expose port (Railway sets PORT env var)
-EXPOSE 3001
-
 # Use gunicorn directly as entrypoint (production-ready)
-# Workers=2, timeout=60s, binds to PORT env var
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-3001} --workers 2 --timeout 60 --access-logfile - proxy_server:app"]
+# Single sync worker, timeout=60s, binds to PORT env var
+# Using exec form for proper signal handling
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-3001}", "--workers", "1", "--worker-class", "sync", "--timeout", "60", "--access-logfile", "-", "--log-level", "debug", "proxy_server:app"]
