@@ -17,8 +17,8 @@ export const USER_DATA = {
             points: "Luka Dončić",
             rebounds: "Nicola Jokic",
             assists: "Trae Young",
-            steals: "Mathisse Thybulle",
-            blocks: "Cason Wallace",
+            steals: "Cason Wallace",
+            blocks: "Victor Wembanyama",
         }
     },
     lucas: {
