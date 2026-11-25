@@ -10,6 +10,13 @@ sys.stdout = open(sys.stdout.fileno(), 'w', buffering=1)
 app = Flask(__name__, static_folder='dist')
 CORS(app)
 
+# Global error handler to prevent worker crashes
+@app.errorhandler(Exception)
+def handle_exception(e):
+    print(f"[GLOBAL ERROR] {e}", flush=True)
+    print(f"[GLOBAL ERROR] Traceback: {traceback.format_exc()}", flush=True)
+    return jsonify({'error': 'Internal server error', 'detail': str(e)}), 500
+
 # Debug: Log all requests
 @app.before_request
 def log_request():
@@ -120,6 +127,11 @@ def get_standings():
 @app.route('/api/health')
 def health():
     return jsonify({'status': 'ok'})
+
+# Simple test endpoint - no nba_api, no static files
+@app.route('/api/test')
+def test():
+    return jsonify({'status': 'ok', 'message': 'Worker alive', 'pid': os.getpid()})
 
 # Serve React build static files
 @app.route('/', defaults={'path': ''})
