@@ -1,5 +1,6 @@
 // Explicit team logo imports - more reliable than glob in production
 // Import each SVG as URL using Vite's ?url suffix
+// Keys match the NBA API TeamName field (lowercase)
 
 import hawks from './hawks.svg?url';
 import celtics from './celtics.svg?url';
@@ -32,37 +33,38 @@ import raptors from './raptors.svg?url';
 import jazz from './jazz.svg?url';
 import wizards from './wizards.svg?url';
 
+// Keys match NBA API TeamName field exactly (lowercase)
 const teamLogos = {
-  hawks,
-  celtics,
-  nets,
-  hornets,
-  bulls,
-  cavaliers,
-  mavericks,
-  nuggets,
-  pistons,
-  warriors,
-  rockets,
-  pacers,
-  clippers,
-  lakers,
-  grizzlies,
-  heat,
-  bucks,
-  timberwolves,
-  pelicans,
-  knicks,
-  thunder,
-  magic,
-  sixers,
-  suns,
-  blazers,
-  kings,
-  spurs,
-  raptors,
-  jazz,
-  wizards,
+  'hawks': hawks,
+  'celtics': celtics,
+  'nets': nets,
+  'hornets': hornets,
+  'bulls': bulls,
+  'cavaliers': cavaliers,
+  'mavericks': mavericks,
+  'nuggets': nuggets,
+  'pistons': pistons,
+  'warriors': warriors,
+  'rockets': rockets,
+  'pacers': pacers,
+  'clippers': clippers,
+  'lakers': lakers,
+  'grizzlies': grizzlies,
+  'heat': heat,
+  'bucks': bucks,
+  'timberwolves': timberwolves,
+  'pelicans': pelicans,
+  'knicks': knicks,
+  'thunder': thunder,
+  'magic': magic,
+  '76ers': sixers,
+  'suns': suns,
+  'trail blazers': blazers,
+  'kings': kings,
+  'spurs': spurs,
+  'raptors': raptors,
+  'jazz': jazz,
+  'wizards': wizards,
 };
 
 export default teamLogos;

@@ -4,15 +4,12 @@ import Giraffe from '../assets/giraffe.svg?react';
 import Tomato from '../assets/tomato.svg?react';
 import { USER_DATA } from '../assets/userData';
 import { useState } from 'react';
-
-// Import all team logos
-const teamLogos = import.meta.glob('../assets/*.svg', { eager: true, as: 'url' });
+import teamLogos from '../assets/teamLogos';
 
 const getTeamLogo = (teamName) => {
-  // Normalize team name to match filename (lowercase only, filenames use spaces)
+  // Normalize team name to match NBA API TeamName field (lowercase)
   const normalized = teamName.toLowerCase();
-  const key = `../assets/${normalized}.svg`;
-  return teamLogos[key] || '';
+  return teamLogos[normalized] || '';
 };
 
 const ICON_COMPONENTS = {
