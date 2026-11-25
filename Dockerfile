@@ -36,5 +36,5 @@ COPY proxy_server.py .
 
 # Use gunicorn directly as entrypoint (production-ready)
 # Single sync worker, timeout=60s, binds to PORT env var
-# Using exec form for proper signal handling
-CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-3001}", "--workers", "1", "--worker-class", "sync", "--timeout", "60", "--access-logfile", "-", "--log-level", "debug", "proxy_server:app"]
+# Using shell form for PORT env var expansion
+CMD gunicorn --bind 0.0.0.0:${PORT:-3001} --workers 1 --worker-class sync --timeout 60 --access-logfile - --log-level debug proxy_server:app
