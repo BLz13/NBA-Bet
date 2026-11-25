@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { USER_DATA } from '../assets/userData';
-
-// Import all team logos
-const teamLogos = import.meta.glob('../assets/*.svg', { eager: true, as: 'url' });
+import teamLogos from '../assets/teamLogos';
 
 const getTeamLogo = (teamName) => {
   const normalized = teamName.toLowerCase();
-  const key = `../assets/${normalized}.svg`;
-  return teamLogos[key] || '';
+  return teamLogos[normalized] || '';
 };
 
 // Proxy API endpoint for NBA stats (Python proxy with nba_api)
