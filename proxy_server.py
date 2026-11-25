@@ -4,9 +4,6 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import traceback
 
-# Force unbuffered output
-sys.stdout = open(sys.stdout.fileno(), 'w', buffering=1)
-
 app = Flask(__name__, static_folder='dist')
 CORS(app)
 
