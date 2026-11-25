@@ -125,4 +125,16 @@ if __name__ == '__main__':
     print("  GET /api/leaders?Season=2026-27&StatCategory=BLK", flush=True)
     print("  GET /api/standings?Season=2026-27&SeasonType=Regular%20Season", flush=True)
     print("  GET /api/health", flush=True)
-    app.run(host='0.0.0.0', port=port, debug=False)
+    # Use gunicorn in production (Railway sets RAILWAY_ENVIRONMENT)
+    if os.environ.get('RAILWAY_ENVIRONMENT'):
+        import subprocess
+        subprocess.run([
+            'gunicorn',
+            '--bind', f'0.0.0.0:{port}',
+            '--workers', '2',
+            '--timeout', '60',
+            '--access-logfile', '-',
+            'proxy-server:app'
+        ])
+    else:
+        app.run(host='0.0.0.0', port=port, debug=False)
