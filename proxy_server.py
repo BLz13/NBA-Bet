@@ -125,10 +125,19 @@ def health():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+    print(f"[SERVE] Request for path: '{path}'", flush=True)
+    try:
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            print(f"[SERVE] Serving static file: {path}", flush=True)
+            return send_from_directory(app.static_folder, path)
+        else:
+            index_path = os.path.join(app.static_folder, 'index.html')
+            print(f"[SERVE] Serving index.html, exists: {os.path.exists(index_path)}", flush=True)
+            return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+        print(f"[SERVE] Error: {e}", flush=True)
+        print(f"[SERVE] Traceback: {traceback.format_exc()}", flush=True)
+        return jsonify({'error': 'Static file serving failed', 'detail': str(e)}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3001))
