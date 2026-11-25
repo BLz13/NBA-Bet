@@ -37,4 +37,5 @@ COPY proxy_server.py .
 # Use gunicorn directly as entrypoint (production-ready)
 # Single sync worker, timeout=60s, binds to PORT env var on IPv6 (dual-stack = IPv4 + IPv6)
 # Using shell form for PORT env var expansion
-CMD gunicorn --bind [::]:${PORT:-3001} --workers 1 --worker-class sync --timeout 60 --access-logfile - --log-level debug proxy_server:app
+# --preload loads app before forking: catches import errors early, faster worker ready
+CMD gunicorn --bind [::]:${PORT:-3001} --workers 1 --worker-class sync --timeout 60 --access-logfile - --log-level debug --preload proxy_server:app
