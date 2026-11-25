@@ -2,7 +2,6 @@ import sys
 import os
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-from nba_api.stats.endpoints import leagueleaders, leaguestandingsv3
 import traceback
 
 # Force unbuffered output
@@ -14,6 +13,9 @@ CORS(app)
 @app.route('/api/leaders')
 def get_leaders():
     try:
+        # Import nba_api inside function to avoid blocking at module load
+        from nba_api.stats.endpoints import leagueleaders
+
         season = request.args.get('Season', '2023-24')
         season_type = request.args.get('SeasonType', 'Regular Season')
         stat_category = request.args.get('StatCategory', 'PTS')
@@ -62,6 +64,9 @@ def get_leaders():
 def get_standings():
     print(f"[get_standings] ENTRY - request received", flush=True)
     try:
+        # Import nba_api inside function to avoid blocking at module load
+        from nba_api.stats.endpoints import leaguestandingsv3
+
         season = request.args.get('Season', '2026-27')
         season_type = request.args.get('SeasonType', 'Regular Season')
 
