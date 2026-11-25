@@ -32,11 +32,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --from=frontend-builder /app/dist ./dist
 
 # Copy Python proxy server
-COPY proxy-server.py .
+COPY proxy_server.py .
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 3001
 
 # Use gunicorn directly as entrypoint (production-ready)
 # Workers=2, timeout=60s, binds to PORT env var
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-3001} --workers 2 --timeout 60 --access-logfile - proxy-server:app"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-3001} --workers 2 --timeout 60 --access-logfile - proxy_server:app"]
