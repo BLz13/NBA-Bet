@@ -12,7 +12,8 @@ const getTeamLogo = (teamName) => {
 };
 
 // Proxy API endpoint for NBA stats (Python proxy with nba_api)
-const PROXY_API = 'http://localhost:3001/api/leaders';
+// Use relative path for production (works on same domain)
+const PROXY_API = '/api/leaders';
 
 const fetchCategoryLeaders = async (season, category) => {
   const statCategoryMap = {

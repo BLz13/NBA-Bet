@@ -6,7 +6,8 @@ import UserSection from './components/UserSection';
 import { useState, useEffect } from 'react';
 
 // Proxy API endpoint for NBA stats (Python proxy with nba_api)
-const PROXY_API = 'http://localhost:3001/api/standings';
+// Use relative path for production (works on same domain)
+const PROXY_API = '/api/standings';
 
 const normalizeStandings = (standings) => {
   // Handle nba_api LeagueStandingsV3 format
