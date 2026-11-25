@@ -65,7 +65,7 @@ const calculateTeamPoints = (predictedTeam, predictedPosition, actualTeams) => {
 const UserSection = ({ title, isAccordion = true, westernTeams, easternTeams }) => {
   const userKey = title.toLowerCase();
   const data = USER_DATA[userKey];
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   if (!data) {
     return (
