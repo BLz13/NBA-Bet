@@ -19,7 +19,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for nba-api
+# Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
@@ -37,5 +37,6 @@ COPY proxy-server.py .
 # Expose port (Railway sets PORT env var)
 EXPOSE 3001
 
-# Run the proxy server (uses PORT env var from Railway)
-CMD ["python", "proxy-server.py"]
+# Use gunicorn directly as entrypoint (production-ready)
+# Workers=2, timeout=60s, binds to PORT env var
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-3001} --workers 2 --timeout 60 --access-logfile - proxy-server:app"]
