@@ -10,6 +10,17 @@ sys.stdout = open(sys.stdout.fileno(), 'w', buffering=1)
 app = Flask(__name__, static_folder='dist')
 CORS(app)
 
+# Debug: Log all requests
+@app.before_request
+def log_request():
+    print(f"[REQUEST] {request.method} {request.path}", flush=True)
+
+# Debug: Verify static folder
+print(f"[STARTUP] Static folder: {app.static_folder}", flush=True)
+print(f"[STARTUP] Static folder exists: {os.path.exists(app.static_folder)}", flush=True)
+if os.path.exists(app.static_folder):
+    print(f"[STARTUP] Static folder contents: {os.listdir(app.static_folder)}", flush=True)
+
 @app.route('/api/leaders')
 def get_leaders():
     try:
