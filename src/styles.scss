@@ -425,7 +425,7 @@ body {
                 grid-template-columns: 5fr 2fr repeat(3, 1fr) !important;
                 gap: 8px;
     
-                .team-city { display: none }
+                .team-city { display: none !important; }
             }
         }
     
